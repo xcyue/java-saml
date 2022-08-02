@@ -45,14 +45,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	protected RelyingPartyRegistrationRepository relyingPartyRegistrations() throws Exception {
 		ClassLoader classLoader = getClass().getClassLoader();
-		File verificationKey = new File(classLoader.getResource("saml-certificate/okta.crt").getFile());
+		File verificationKey = new File(classLoader.getResource("saml-certificate/sso.crt").getFile());
 	    X509Certificate certificate = X509Support.decodeCertificate(verificationKey);
 	    Saml2X509Credential credential = Saml2X509Credential.verification(certificate);
 	    RelyingPartyRegistration registration = RelyingPartyRegistration
-	            .withRegistrationId("okta-saml")
+	            .withRegistrationId("sso-saml")
 	            .assertingPartyDetails(party -> party
-	                .entityId("http://www.okta.com/exk6sni93NCyDl9VP5d6")
-	                .singleSignOnServiceLocation("https://dev-11017565.okta.com/app/dev-11017565_appsaml_1/exk6sni93NCyDl9VP5d6/sso/saml")
+	                .entityId("https://portal.sso.us-east-1.amazonaws.com/saml/assertion/xxxxxxxxxxxx")
+	                .singleSignOnServiceLocation("https://portal.sso.us-east-1.amazonaws.com/saml/assertion/xxxxxxx")
 	                .wantAuthnRequestsSigned(false)
 	                .verificationX509Credentials(c -> c.add(credential))
 	            ).build();
